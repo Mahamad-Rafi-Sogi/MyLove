@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Heart, ChevronLeft, ChevronRight, Instagram, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Heart, ChevronLeft, ChevronRight, Instagram, Volume2, VolumeX, Play, Pause } from 'lucide-react';
 
 // Sample photos with more diverse romantic moments
 const photos = [
@@ -36,9 +36,34 @@ interface PhotoGalleryProps {
 }
 
 function PhotoGallery({ onBack }: PhotoGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+const [currentIndex, setCurrentIndex] = useState(0);
+const [isTransitioning, setIsTransitioning] = useState(false);
+const [isMuted, setIsMuted] = useState(true);
+const [volume, setVolume] = useState(0.5);
+const [isPlaying, setIsPlaying] = useState(false);
+const audioRef = React.useRef<HTMLAudioElement>(null);
+
+useEffect(() => {
+    if (audioRef.current) {
+    audioRef.current.volume = 0.5;
+    
+    audioRef.current.addEventListener('error', (e) => {
+        console.error('Audio error:', e);
+    });
+    
+    audioRef.current.addEventListener('loadeddata', () => {
+        console.log('Audio loaded successfully');
+    });
+    
+    // Try to play on component mount
+    const playPromise = audioRef.current.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+        console.log('Autoplay prevented:', error);
+        });
+    }
+    }
+}, []);
 
   const nextSlide = () => {
     if (isTransitioning) return;
@@ -57,15 +82,36 @@ function PhotoGallery({ onBack }: PhotoGalleryProps) {
   useEffect(() => {
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
-  }, [currentIndex, isTransitioning]);
+}, [currentIndex, isTransitioning]);
 
-  const toggleMute = () => {
-    const audio = document.getElementById('background-music') as HTMLAudioElement;
-    if (audio) {
-      audio.muted = !audio.muted;
-      setIsMuted(!isMuted);
+const toggleMute = () => {
+if (audioRef.current) {
+    audioRef.current.muted = !audioRef.current.muted;
+    setIsMuted(!isMuted);
+    if (!audioRef.current.muted) {
+    audioRef.current.volume = volume;
     }
-  };
+}
+};
+
+const togglePlay = () => {
+if (audioRef.current) {
+    if (isPlaying) {
+    audioRef.current.pause();
+    } else {
+    audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+    setIsMuted(false);
+}
+};
+
+const handleVolumeChange = (newVolume: number) => {
+setVolume(newVolume);
+if (audioRef.current) {
+    audioRef.current.volume = newVolume;
+}
+};
 
   const getPhotoPosition = (index: number) => {
     const position = (index - currentIndex + photos.length) % photos.length;
@@ -132,14 +178,26 @@ function PhotoGallery({ onBack }: PhotoGalleryProps) {
         )}
       </button>
 
-      <audio
-        id="background-music"
-        autoPlay
-        loop
-        className="hidden"
-      >
-        <source src="https://www.chosic.com/wp-content/uploads/2023/07/romantic-piano.mp3" type="audio/mpeg" />
-      </audio>
+    <audio
+    ref={audioRef}
+    loop
+    preload="auto"
+    muted={isMuted}
+    >
+    <source src="./assets/music/background-music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+    </audio>
+
+    <button
+    onClick={togglePlay}
+    className="absolute top-4 right-16 z-50 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+    >
+    {isPlaying ? (
+        <Pause className="w-6 h-6 text-white" />
+    ) : (
+        <Play className="w-6 h-6 text-white" />
+    )}
+    </button>
 
       <div className="absolute top-1/2 left-4 z-20">
         <button
@@ -202,28 +260,15 @@ function PhotoGallery({ onBack }: PhotoGalleryProps) {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-rose-200/30">
-          <p className="text-rose-400 font-semibold mb-4">Connect with us on Instagram</p>
-          <div className="flex justify-center space-x-8">
-            <a
-              href="https://instagram.com/rafi"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-rose-400 hover:text-rose-300 transition-colors"
-            >
-              <Instagram className="w-5 h-5" />
-              <span>@rafi</span>
-            </a>
-            <a
-              href="https://instagram.com/****"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-rose-400 hover:text-rose-300 transition-colors"
-            >
-              <Instagram className="w-5 h-5" />
-              <span>@****</span>
-            </a>
-          </div>
+        <div className="absolute bottom-8 left-0 right-0 text-center z-50">
+        <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
+        >
+            Connect with us on Instagram ❤️
+        </a>
         </div>
       </div>
     </div>
