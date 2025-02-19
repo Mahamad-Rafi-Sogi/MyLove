@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import { Heart, Flower, Instagram } from 'lucide-react';
 import PhotoGallery from './components/PhotoGallery';
 
+export const Credit = () => (
+<div className="absolute top-4 right-6 z-50 animate-fadeIn">
+    <span className="font-montserrat bg-gradient-to-r from-pink-200 via-pink-300 to-rose-200 text-transparent bg-clip-text text-lg font-semibold tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)] whitespace-nowrap">
+    Created by Rafi
+    </span>
+</div>
+);
+
 function FloatingElements() {
   return (
     <div className="fixed inset-0 pointer-events-none">
@@ -28,63 +36,61 @@ function FloatingElements() {
 }
 
 function App() {
-  const [showGallery, setShowGallery] = useState(false);
-  const [bgColor, setBgColor] = useState('bg-rose-100');
-  const colors = ['bg-rose-100', 'bg-purple-100', 'bg-pink-100', 'bg-red-100'];
-
-  const changeColor = () => {
-    const currentIndex = colors.indexOf(bgColor);
-    const nextIndex = (currentIndex + 1) % colors.length;
-    setBgColor(colors[nextIndex]);
-  };
+const [showGallery, setShowGallery] = useState(false);
 
   if (showGallery) {
     return <PhotoGallery onBack={() => setShowGallery(false)} />;
   }
 
-  return (
-    <div 
-      className={`min-h-screen ${bgColor} transition-colors duration-500 relative`}
-      style={{
-        backgroundImage: 'url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1920&q=80")',
+return (
+<div 
+className="min-h-screen relative flex items-center justify-center overflow-hidden"
+    style={{
+        backgroundImage: 'url("/assets/images/bg.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
-      }}
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat',
+        transition: 'all 0.5s ease-in-out'
+    }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-white/90 to-white/50 backdrop-blur-sm"></div>
+    <Credit />
+    <div 
+        className="absolute inset-0 bg-gradient-to-br from-rose-500/30 via-pink-500/20 to-purple-500/30 backdrop-blur-[3px] animate-gradient"
+        style={{
+        animation: 'gradientShift 15s ease infinite'
+        }}
+    ></div>
+    <div className="absolute inset-0 bg-black/20"></div>
       <FloatingElements />
-      <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-rose-600 mb-8 animate-pulse drop-shadow-lg">
-            Welcome to Our Love Story
-            <span className="ml-2">Rafi ❤️ ****</span>
-          </h1>
+    <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center">
+    <div className="max-w-3xl w-full text-center">
+        <h1 className="text-6xl font-playfair text-white mb-6 animate-pulse drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]">
+        Welcome to Our Love Story
+        </h1>
+        <div className="text-7xl mb-8 animate-fadeIn hover:scale-105 transition-transform duration-300">
+        <span className="font-great-vibes bg-gradient-to-r from-pink-200 via-pink-300 to-rose-200 text-transparent bg-clip-text tracking-wider drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)] hover:drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-all duration-300">
+            Rafi <Heart className="w-20 h-20 inline-block fill-pink-200 stroke-pink-300 animate-pulse hover:scale-110 transition-transform duration-300 mx-3 drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]" /> ****
+        </span>
+        </div>
           
           <div className="space-y-6">
             <button
-              onClick={changeColor}
-              className="bg-white/80 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-rose-600 font-semibold text-lg mx-2 hover:bg-white backdrop-blur-sm"
-            >
-              Change Theme Color
-            </button>
-            
-            <button
-              onClick={() => setShowGallery(true)}
-              className="bg-rose-600/90 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-white font-semibold text-lg mx-2 hover:bg-rose-700 backdrop-blur-sm"
+            onClick={() => setShowGallery(true)}
+            className="font-montserrat bg-gradient-to-r from-pink-400/90 to-rose-400/90 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-white font-semibold text-xl mx-2 hover:from-pink-500/90 hover:to-rose-500/90 backdrop-blur-sm"
             >
               Explore Our Love Story
             </button>
           </div>
 
-          <div className="mt-16 pt-8 border-t border-rose-200/30">
-            <p className="text-rose-600 font-semibold mb-4">Connect with us on Instagram</p>
+        <div className="mt-12 pt-8 border-t border-rose-200/30 w-full">
+            <p className="font-montserrat text-pink-200 text-lg font-semibold mb-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">Connect with us on Instagram</p>
             <div className="flex justify-center space-x-8">
               <a
                 href="https://instagram.com/rafi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-rose-600 hover:text-rose-700 transition-colors"
+                className="flex items-center space-x-2 text-pink-200 hover:text-pink-100 transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
               >
                 <Instagram className="w-5 h-5" />
                 <span>@rafi</span>
@@ -93,7 +99,7 @@ function App() {
                 href="https://instagram.com/****"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-rose-600 hover:text-rose-700 transition-colors"
+                className="flex items-center space-x-2 text-pink-200 hover:text-pink-100 transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
               >
                 <Instagram className="w-5 h-5" />
                 <span>@****</span>

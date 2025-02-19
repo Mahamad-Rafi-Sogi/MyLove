@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Heart, ChevronLeft, ChevronRight, Instagram, Volume2, VolumeX, Play, Pause } from 'lucide-react';
+import { Credit } from '../App';
+import { ArrowLeft, Heart, ChevronLeft, ChevronRight, Instagram, Volume2, VolumeX } from 'lucide-react';
 
 // Sample photos with more diverse romantic moments
 const photos = [
@@ -40,7 +41,6 @@ const [currentIndex, setCurrentIndex] = useState(0);
 const [isTransitioning, setIsTransitioning] = useState(false);
 const [isMuted, setIsMuted] = useState(true);
 const [volume, setVolume] = useState(0.5);
-const [isPlaying, setIsPlaying] = useState(false);
 const audioRef = React.useRef<HTMLAudioElement>(null);
 
 useEffect(() => {
@@ -65,55 +65,43 @@ useEffect(() => {
     }
 }, []);
 
-  const nextSlide = () => {
+const nextSlide = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex((prev) => (prev + 1) % photos.length);
     setTimeout(() => setIsTransitioning(false), 1000);
-  };
+};
 
-  const prevSlide = () => {
+const prevSlide = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
     setTimeout(() => setIsTransitioning(false), 1000);
-  };
+};
 
-  useEffect(() => {
+useEffect(() => {
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
 }, [currentIndex, isTransitioning]);
 
 const toggleMute = () => {
-if (audioRef.current) {
+    if (audioRef.current) {
     audioRef.current.muted = !audioRef.current.muted;
     setIsMuted(!isMuted);
     if (!audioRef.current.muted) {
-    audioRef.current.volume = volume;
+        audioRef.current.volume = volume;
     }
-}
-};
-
-const togglePlay = () => {
-if (audioRef.current) {
-    if (isPlaying) {
-    audioRef.current.pause();
-    } else {
-    audioRef.current.play();
     }
-    setIsPlaying(!isPlaying);
-    setIsMuted(false);
-}
 };
 
 const handleVolumeChange = (newVolume: number) => {
-setVolume(newVolume);
-if (audioRef.current) {
+    setVolume(newVolume);
+    if (audioRef.current) {
     audioRef.current.volume = newVolume;
-}
+    }
 };
 
-  const getPhotoPosition = (index: number) => {
+const getPhotoPosition = (index: number) => {
     const position = (index - currentIndex + photos.length) % photos.length;
     const totalVisible = 5;
     const centerIndex = Math.floor(totalVisible / 2);
@@ -157,26 +145,29 @@ if (audioRef.current) {
         backgroundAttachment: 'fixed'
       }}
     >
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-      <FloatingHearts />
-      
-      <button
+    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <FloatingHearts />
+    <div className="absolute top-4 right-6 z-50">
+    <Credit />
+    </div>
+
+    <button
         onClick={onBack}
         className="absolute top-4 left-4 z-50 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
       >
         <ArrowLeft className="w-6 h-6 text-white" />
       </button>
 
-      <button
-        onClick={toggleMute}
-        className="absolute top-4 right-4 z-50 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
-      >
-        {isMuted ? (
-          <VolumeX className="w-6 h-6 text-white" />
-        ) : (
-          <Volume2 className="w-6 h-6 text-white" />
-        )}
-      </button>
+    <button
+    onClick={toggleMute}
+    className="absolute top-20 right-6 z-50 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+    >
+    {isMuted ? (
+        <VolumeX className="w-6 h-6 text-white" />
+    ) : (
+        <Volume2 className="w-6 h-6 text-white" />
+    )}
+    </button>
 
     <audio
     ref={audioRef}
@@ -188,16 +179,6 @@ if (audioRef.current) {
     Your browser does not support the audio element.
     </audio>
 
-    <button
-    onClick={togglePlay}
-    className="absolute top-4 right-16 z-50 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
-    >
-    {isPlaying ? (
-        <Pause className="w-6 h-6 text-white" />
-    ) : (
-        <Play className="w-6 h-6 text-white" />
-    )}
-    </button>
 
       <div className="absolute top-1/2 left-4 z-20">
         <button
