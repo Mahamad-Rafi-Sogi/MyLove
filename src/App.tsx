@@ -70,7 +70,7 @@ className="min-h-screen relative flex items-center justify-center overflow-hidde
         </h1>
         <div className="text-7xl mb-8 animate-fadeIn hover:scale-105 transition-transform duration-300">
         <span className="font-great-vibes bg-gradient-to-r from-pink-200 via-pink-300 to-rose-200 text-transparent bg-clip-text tracking-wider drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)] hover:drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-all duration-300">
-            Rafi <Heart className="w-20 h-20 inline-block fill-pink-200 stroke-pink-300 animate-pulse hover:scale-110 transition-transform duration-300 mx-3 drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]" /> ****
+            Rafi <Heart className="w-20 h-20 inline-block fill-pink-200 stroke-pink-300 animate-pulse hover:scale-110 transition-transform duration-300 mx-3 drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]" /> Asma
         </span>
         </div>
           
@@ -93,7 +93,7 @@ className="min-h-screen relative flex items-center justify-center overflow-hidde
                 className="flex items-center space-x-2 text-pink-200 hover:text-pink-100 transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
               >
                 <Instagram className="w-5 h-5" />
-                <span>@rafi</span>
+                <span>@Rafi</span>
               </a>
               <a
                 href="https://instagram.com/****"
@@ -102,7 +102,7 @@ className="min-h-screen relative flex items-center justify-center overflow-hidde
                 className="flex items-center space-x-2 text-pink-200 hover:text-pink-100 transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
               >
                 <Instagram className="w-5 h-5" />
-                <span>@****</span>
+                <span>@Asma</span>
               </a>
             </div>
           </div>

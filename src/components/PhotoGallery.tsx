@@ -4,11 +4,13 @@ import { ArrowLeft, Heart, ChevronLeft, ChevronRight, Instagram, Volume2, Volume
 
 // Sample photos with more diverse romantic moments
 const photos = [
-  "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800",
-  "https://images.unsplash.com/photo-1535615615570-3b839f4359be?w=800",
-  "https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=800",
-  "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800",
-  "https://images.unsplash.com/photo-1537261131936-3cdff36a1ac9?w=800",
+  "https://media.istockphoto.com/id/157676310/photo/romantic-couple-at-sunset.jpg?s=612x612&w=0&k=20&c=HZR9rncAeh-17GeRNUQnzaH8vU0AZsVqnIkBt4MqHuQ=",
+  "assets/images/couple1.jpg",
+  "assets/images/couple2.jpg",
+  "assets/images/couple3.jpg",
+  "assets/images/couple4.jpg",
+  "assets/images/couple5.jpg",
+
 ];
 
 function FloatingHearts() {
@@ -39,7 +41,7 @@ interface PhotoGalleryProps {
 function PhotoGallery({ onBack }: PhotoGalleryProps) {
 const [currentIndex, setCurrentIndex] = useState(0);
 const [isTransitioning, setIsTransitioning] = useState(false);
-const [isMuted, setIsMuted] = useState(true);
+const [isMuted, setIsMuted] = useState(false);
 const [volume, setVolume] = useState(0.5);
 const audioRef = React.useRef<HTMLAudioElement>(null);
 
@@ -222,14 +224,16 @@ const getPhotoPosition = (index: number) => {
                     }
                   }}
                 >
-                  <div className="relative group">
+                <div className="relative group">
                     <img
                       src={photo}
                       alt={`Memory ${index + 1}`}
-                      className="w-96 h-64 object-cover rounded-lg shadow-lg transition-all duration-1000"
+                      className="rounded-lg shadow-lg transition-all duration-1000 max-w-full max-h-[70vh]"
                       style={{
                         filter: index === currentIndex ? 'none' : 'brightness(0.7)',
-                      }}
+                        display: 'block',
+                        margin: '0 auto',
+                    }}
                     />
                     <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
                       <Heart className="w-12 h-12 text-rose-400" />
